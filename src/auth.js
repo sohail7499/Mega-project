@@ -1,0 +1,64 @@
+import config from "./config/config";
+import { Client, Account, ID } from "appwrite";
+
+export class AuthService {
+  client = new Client();
+  account;
+
+  constructor() {
+    this.client = new Client()
+      .setEndpoint(config.appWriteUrl)
+      .setProject(config.appWriteProjectId);
+
+    this.account = new Account(this.client);
+    // Configured Appwrite client ko Account service ke saath connect karke account service ready karta hai.
+  }
+
+  async createAccount({ email, password, name }) {
+    try {
+      const userAccount = await this.account.create(
+        ID.unique(),
+        email,
+        password,
+        name,
+      );
+      //userAccount = Appwrite se create hone ke baad returned user-account information.
+      // await = us operation ka result aane ka wait.
+      if (userAccount) {
+        return this.login({ email, password });
+      } else {
+        return userAccount;
+      }
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async login({ email, password }) {
+    try {
+      return await this.account.createEmailPasswordSession({ email, password });
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async getCurrentUser() {
+    try {
+      return await this.account.get();
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async logout() {
+    try {
+      await this.account.deleteSessions();
+    } catch (error) {
+      throw error;
+    }
+  }
+}
+
+const authService = new AuthService();
+
+export default authService;
