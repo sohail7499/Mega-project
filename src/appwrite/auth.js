@@ -1,4 +1,4 @@
-import config from "./config/config";
+import config from "../config/config";
 import { Client, Account, ID } from "appwrite";
 
 export class AuthService {
@@ -7,8 +7,8 @@ export class AuthService {
 
   constructor() {
     this.client = new Client()
-      .setEndpoint(config.appWriteUrl)
-      .setProject(config.appWriteProjectId);
+      .setEndpoint(config.appwriteUrl)
+      .setProject(config.appwriteProjectId);
 
     this.account = new Account(this.client);
     // Configured Appwrite client ko Account service ke saath connect karke account service ready karta hai.
