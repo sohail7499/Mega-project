@@ -7,6 +7,7 @@ function LogoutBtn() {
   const dispatch = useDispatch();
   const logoutHandler = () => {
     authService.logout().then(() => {
+      // Ye Appwrite/backend side par current user ka session logout/end karta hai.
       dispatch(logout());
     });
   };
