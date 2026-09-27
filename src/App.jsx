@@ -25,7 +25,7 @@ function App() {
   }, []);
 
   return !loading ? (
-    <div className="min-h-screen flex justify-center  bg-gray-400">
+    <div className="min-h-screen  bg-gray-400">
       <div className="">
         <Header />
         TODO: <Outlet />
