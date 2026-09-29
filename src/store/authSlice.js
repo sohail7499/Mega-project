@@ -14,6 +14,7 @@ const authSlice = createSlice({
     login: (state, action) => {
       state.status = true;
       state.userData = action.payload.userData;
+      // "userLogin action se jo userData aaya hai, usko mere Redux state ke userData mein save kar do."
     },
     logout: (state) => {
       state.status = false;
