@@ -41,6 +41,7 @@ function PostForm({ post }) {
       if (dbPost) {
         navigate(`/post/${dbPost.$id}`);
       }
+      //new post create
     } else {
       const file = data.image[0]
         ? await appwriteService.uploadFile(data.image[0])
