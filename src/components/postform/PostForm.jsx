@@ -108,6 +108,49 @@ function PostForm({ post }) {
             // User ne slug input mein jo current value dali hai, usko slugTransform() se slug format mein convert karo aur converted value ko slug field mein set karo.
           }}
         />
+
+        <RTE
+          label="Content"
+          name="content"
+          control={control}
+          defaultValue={getValues("content")}
+        />
+
+        <Input
+          label="FeaturedImage"
+          className="mb-4"
+          type="file"
+          accept="image/png, image/jpg, image/jpeg, image/gif"
+          {...register("image", { required: !post })}
+        />
+
+        {post && (
+          <div className="w-full mb-4">
+            <img
+              src={appwriteService.getFilePreview(post.featuredImage)}
+              alt={post.title}
+              className="rounded-lg"
+            />
+            {/* Appwrite mein stored image ka ID:
+              Aur getFilePreview() us ID se image ka preview URL deta hai. */}
+          </div>
+        )}
+        <Select
+          options={["active", "inactive"]}
+          label="status"
+          className="mb-4"
+          {...register("status", {
+            required: true,
+          })}
+        />
+
+        <Button
+          type="submit"
+          bgColor={post ? "bg-green-500" : undefined}
+          className="w-full"
+        >
+          {post ? "Update " : "Submit"}
+        </Button>
       </div>
     </form>
   );
