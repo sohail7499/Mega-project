@@ -1,5 +1,5 @@
 import config from "../config/config";
-import { Client, ID, Databases, Storage, Query,} from "appwrite";
+import { Client, ID, Databases, Storage, Query } from "appwrite";
 
 export class Service {
   client = new Client();
@@ -15,22 +15,26 @@ export class Service {
     this.bucket = new Storage(this.client);
   }
 
-  async createPost({ title, slug, content, featuredImage, status, userId }) {
+  async createPost({ title, slug, content, featuredimage, status, userId }) {
     try {
       return await this.databases.createDocument(
-        //Databases.createDocument(databaseId, collectionId, documentId, permissions?{})
-        //post create karne ke liye kya kya chahiye
         config.appwriteDatabaseId,
         config.appwriteCollectionId,
         slug,
-        { title, content, featuredImage, status, userId },
+        {
+          title,
+          content,
+          featuredimage,
+          status,
+          userId,
+        },
       );
     } catch (error) {
       console.log("Appwrite serive :: createPost :: error", error);
     }
   }
 
-  async updatePost(slug, { title, content, featuredImage, status }) {
+  async updatePost(slug, { title, content, featuredimage, status }) {
     //slug → kis existing post ko update karna hai
     try {
       return await this.databases.updateDocument(
@@ -40,7 +44,7 @@ export class Service {
         {
           title,
           content,
-          featuredImage,
+          featuredimage,
           status,
         },
       );
@@ -115,8 +119,8 @@ export class Service {
     }
   }
 
-  getFilePreview (fileId) {
-    return this.bucket.getFilePreview(config.appwriteBucketId, fileId);
+  getFilePreview(fileId) {
+    return this.bucket.getFileView(config.appwriteBucketId, fileId);
   }
 }
 

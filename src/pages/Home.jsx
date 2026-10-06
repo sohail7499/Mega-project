@@ -1,18 +1,20 @@
-import React, { useState, useEffect, use } from "react";
-import { Container, PostForm } from "../components/index";
+import React, { useState, useEffect } from "react";
+import { Container, PostCard } from "../components/index";
 import appwriteService from "../appwrite/service";
 
+
+
 function Home() {
-  const [posts, setPost] = useState([]);
+  
+  const [posts, setPosts] = useState([]);
   useEffect(() => {
-    appwriteService.getPosts().then((posts) => {
-      if (posts) {
-        setPost(posts.documents);
-      }
+    appwriteService.getPosts().then((res) => {
+      console.log("POSTS RESPONSE:", res);
+      if (res) setPosts(res.documents);
     });
   }, []);
 
-  if (posts === 0) {
+  if (posts.length === 0) {
     return (
       <div className="w-full py-8 mt-4 text-center">
         <Container>
@@ -33,7 +35,7 @@ function Home() {
         <div className="flex flex-wrap">
           {posts.map((post) => (
             <div key={post.$id} className="py-2 w-1/4">
-              <PostForm {...post} />
+              <PostCard {...post} />
             </div>
           ))}
         </div>

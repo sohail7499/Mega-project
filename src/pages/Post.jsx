@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import parse from "html-react-parser";
 
 function Post() {
-  const [post, setPost] = useState([]);
+  const [post, setPost] = useState(null);
   const { slug } = useParams();
   const navigate = useNavigate();
 
@@ -29,7 +29,7 @@ function Post() {
     // Jab Appwrite deletion complete kar deta hai, uska result status me milta hai.
     appwriteService.deletePost(post.$id).then((status) => {
       if (status) {
-        appwriteService.deleteFile(post.featuredImage);
+        appwriteService.deleteFile(post.featuredimage);
         // Post delete ho gayi, lekin uski featured image Appwrite Storage me alag file hoti hai.
         navigate("/");
       }
@@ -41,8 +41,8 @@ function Post() {
       <Container>
         <div className="w-full flex justify-center mb-4 relative border rounded-xl p-2">
           <img
-            src={appwriteService.getFilePreview(post.featuredImage)}
-            alt={post.tile}
+            src={appwriteService.getFilePreview(post.featuredimage)}
+            alt={post.title}
             className="rounded-xl"
           />
 
@@ -53,7 +53,7 @@ function Post() {
                   Edit
                 </Button>
               </Link>
-              <Button bgColor="bg-red-500" onclick={deletePost}>
+              <Button bgColor="bg-red-500" onClick={deletePost}>
                 Delete
               </Button>
             </div>

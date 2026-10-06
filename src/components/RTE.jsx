@@ -11,19 +11,21 @@ export default function RTE({ name, control, label, defaultValue = "" }) {
         name={name || "content"}
         control={control}
         // useForm() se mila control object, jo Controller ko React Hook Form se connect karta hai
-        render={({ field: { onChange } }) => (
+        render={({ field: { onChange, value } }) => (
           <Editor
+            value={value}
             initialValue={defaultValue}
             init={{
               height: 500,
               menubar: true,
+              license_key: "gpl",
+              promotion: false,
               plugins: [
                 "image",
                 "advlist",
                 "autolink",
                 "lists",
                 "link",
-                "image",
                 "charmap",
                 "preview",
                 "anchor",
@@ -34,19 +36,16 @@ export default function RTE({ name, control, label, defaultValue = "" }) {
                 "insertdatetime",
                 "media",
                 "table",
-                "code",
                 "help",
                 "wordcount",
-                "anchor",
               ],
               toolbar:
-                "undo redo | blocks | image | bold italic forecolor | alignleft aligncenter bold italic forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent |removeformat | help",
+                "undo redo | blocks | image | bold italic forecolor | alignleft aligncenter bold italic forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help",
               content_style:
                 "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
             }}
             // plugins → features available karata hai
             // toolbar → un features ke buttons/menu ko editor me show/control karta hai
-            
             onEditorChange={onChange}
           />
         )}
